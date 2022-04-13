@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 
 import { Typography, useMediaQuery } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
+import { AppBar, IconButton, Toolbar } from '@material-ui/core';
+import { Menu } from '@material-ui/icons';
 import { StylesProvider, useTheme } from '@material-ui/styles'; // make styled components styling have priority
 import styled from 'styled-components';
 
@@ -15,9 +13,10 @@ import { isPreview, term, termName, year } from '../../constants/timetable';
 import { AppContext } from '../../context/AppContext';
 
 import About from './About';
+import Changelog from './Changelog';
 import Privacy from './Privacy';
 import Settings from './Settings';
-import Changelog from './Changelog';
+import Login from './Login';
 
 const LogoImg = styled.img`
   height: 46px;
@@ -78,7 +77,7 @@ const Navbar: React.FC = () => {
           <Toolbar>
             {isPreview && (
               <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start">
-                <MenuIcon />
+                <Menu />
               </IconButton>
             )}
             <LogoImg
@@ -97,6 +96,7 @@ const Navbar: React.FC = () => {
             <Changelog />
             <Privacy />
             <Settings />
+            <Login />
           </Toolbar>
         </StyledNavBar>
       </NavbarBox>
