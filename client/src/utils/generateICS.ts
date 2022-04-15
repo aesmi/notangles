@@ -1,9 +1,9 @@
 import { createEvent } from 'ics';
-import { firstDayOfTerm } from '../constants/timetable';
 import dayjs from 'dayjs';
 import { CourseData, SelectedClasses, ClassPeriod } from '../interfaces/Course';
 import { saveAs } from 'file-saver';
 import { DateArray } from 'ics';
+import { getLatestAvailableDataTerm } from './currentTermData';
 
 /**
  * makes a request to download an ICS file which corresponds to the data the user input
@@ -15,12 +15,21 @@ export const downloadIcsFile = async (courses: CourseData[], classes: SelectedCl
   if (classes === null) {
     return;
   }
+  const firstDayOfTerm =  await getLatestAvailableDataTerm().then((data) => {
+      const dayMonthYearList = data.split('/')
+      const day = dayMonthYearList[0];
+      const month = dayMonthYearList[1];
+      const year = dayMonthYearList[2];
+      const date = year + '-' +month + '-' + day;
+      return date;
+  })
+
   const timezone = await getUtcOffset();
   const icsFile = getAllEvents(courses, classes)
     .map(([period, week]) =>
       createEvent({
-        start: generateDateArray(timezone, period.time.start, period.time.day, week),
-        end: generateDateArray(timezone, period.time.end, period.time.day, week),
+        start: generateDateArray(timezone, period.time.start, period.time.day, week, firstDayOfTerm),
+        end: generateDateArray(timezone, period.time.end, period.time.day, week, firstDayOfTerm),
         title: `${period.class.course.code} ${period.class.activity}`,
         location: period.locations[0],
       })
@@ -29,8 +38,9 @@ export const downloadIcsFile = async (courses: CourseData[], classes: SelectedCl
   saveAs(new Blob([icsFile.join('\n')], { type: 'text/ics' }), 'notangles.ics');
 };
 
-const generateDateArray = (timezone: number, hour: number, day: number, week: number): DateArray => {
+const generateDateArray = (timezone: number, hour: number, day: number, week: number, firstDayOfTerm: string): DateArray => {
   // 0 index days and weeks
+  
   const currDate = dayjs(firstDayOfTerm + `T00:00:00.000Z`)
     .subtract(timezone, 'h')
     .add(week - 1, 'w')
