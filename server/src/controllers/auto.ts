@@ -7,7 +7,7 @@ import { config } from '../config';
 
 type AutoData = TimetableConstraints.AsObject;
 
-export const getAuto = async (req: Request, res: Response) => {
+export const getAutoController = async (req: Request, res: Response) => {
   var client = new AutoTimetablerClient(config.auto, grpc.credentials.createInsecure());
   const constraints = new TimetableConstraints();
 
@@ -22,8 +22,7 @@ export const getAuto = async (req: Request, res: Response) => {
   client.findBestTimetable(constraints, (err, response) => {
     if (err) {
       console.log('error was found: ' + err);
-      res.status(502).send('An error occurred when handling the request.')
-
+      res.status(502).send('An error occurred when handling the request.');
     } else {
       res.send(JSON.stringify({ given: response.getTimesList() }));
     }

@@ -1,4 +1,4 @@
-import { getAuto } from './getAutotimetable';
+import { getAutoController } from './auto';
 import { getSettingsController } from './settings';
 
-export { getAuto, getSettingsController };
+export { getAutoController, getSettingsController };
