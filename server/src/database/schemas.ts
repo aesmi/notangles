@@ -1,13 +1,13 @@
 import { Schema } from 'mongoose';
 
 const UserSettingsSchema = new Schema({
-  user_id: String,
-  is12HourMode: Boolean,
-  isDarkMode: Boolean,
-  isSquareEdges: Boolean,
-  isHideFullClasses: Boolean,
-  isDefaultUnscheduled: Boolean,
-  isHideClassInfo: Boolean,
+  userID: { type: String, unique: true, required: true },
+  is12HourMode: { type: Boolean, required: true },
+  isDarkMode: { type: Boolean, required: true },
+  isSquareEdges: { type: Boolean, required: true },
+  isHideFullClasses: { type: Boolean, required: true },
+  isDefaultUnscheduled: { type: Boolean, required: true },
+  isHideClassInfo: { type: Boolean, required: true },
 });
 
 export { UserSettingsSchema };

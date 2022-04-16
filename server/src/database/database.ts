@@ -9,7 +9,7 @@ const dbConnect = async () => {
 
 const initSettings = async () => {
   const defaultSettings = new UserSettings({
-    user_id: '1',
+    userID: '1',
     is12HourMode: false,
     isDarkMode: false,
     isSquareEdges: false,
@@ -21,9 +21,12 @@ const initSettings = async () => {
   await defaultSettings.save();
 };
 
-const getSettings = async () => {
-  const settings = await UserSettings.find();
-  console.log(settings);
+const getSettings = async (userID: string) => {
+  const settings = await UserSettings.findOne({
+    userID,
+  });
+
+  return settings;
 };
 
 export { dbConnect, initSettings, getSettings };

@@ -1,9 +1,9 @@
-import * as express from 'express';
-import { Response, Request } from 'express';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
+import * as express from 'express';
 
 import index from './index';
-import { getAuto, getSettingsController } from './controllers/index';
+import { getAutoController, getSettingsController } from './controllers/index';
 
 const app = express();
 
@@ -13,15 +13,10 @@ app.set('port', process.env.PORT || 3001);
 app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
-
-app.use((req: Request, res: Response, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use(cors());
 
 app.get('/', index);
-app.get('/user/settings', getSettingsController);
-app.post('/auto', getAuto);
+app.get('/user/settings/:userID', getSettingsController);
+app.post('/auto', getAutoController);
 
 export default app;

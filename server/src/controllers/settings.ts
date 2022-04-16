@@ -1,15 +1,15 @@
 import { Response, Request } from 'express';
-import { dbConnect, initSettings, getSettings } from '../database/database';
+import { initSettings, getSettings } from '../database/database';
 
 const getSettingsController = async (req: Request, res: Response) => {
-  dbConnect()
-    .then(() => {
-      return initSettings();
-    })
-    .then(() => {
-      res.send(JSON.stringify({ settings: getSettings() }));
-    })
-    .catch((err) => console.log(err));
+  const _ = await initSettings();
+
+  const userID = req.params.userID;
+
+  if (!userID) return res.status(400).send('Missing user id');
+
+  const settings = await getSettings(userID);
+  res.send(JSON.stringify({ settings }));
 };
 
 export { getSettingsController };
