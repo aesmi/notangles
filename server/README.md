@@ -15,6 +15,8 @@ In the root server directory `server`, run `npm install` to install all the depe
 
 Run `npm start` to start the server locally. The server will be hosted at http://localhost:3001.
 
+Run `docker-compose up` to start both the server and database. The server will be hosted at http://localhost:3001. After making any changes, run `docker-compose up --detach --build` to rebuild images with changes and replaces the changed containers.
+
 ## Tech Stack
 
 The Notangles server uses:
