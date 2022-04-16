@@ -1,8 +1,9 @@
 import * as express from 'express';
 import { Response, Request } from 'express';
 import * as bodyParser from 'body-parser';
-import * as indexController from './index';
-import { getAuto } from './controllers/index';
+
+import index from './index';
+import { getAuto, getSettingsController } from './controllers/index';
 
 const app = express();
 
@@ -19,7 +20,8 @@ app.use((req: Request, res: Response, next) => {
   next();
 });
 
-app.get('/', indexController.index);
+app.get('/', index);
+app.get('/user/settings', getSettingsController);
 app.post('/auto', getAuto);
 
 export default app;
