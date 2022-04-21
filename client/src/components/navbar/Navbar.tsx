@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Description, Info, Login as LoginIcon, Menu, Security, Settings as SettingsIcon } from '@mui/icons-material';
-import { AppBar, IconButton, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Description, Info, Login as LoginIcon, Security, Settings as SettingsIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 
 import notanglesLogo from '../../assets/notangles_1.png';
 import notanglesLogoGif from '../../assets/notangles.gif';
 import { ThemeType } from '../../constants/theme';
-import { isPreview, term, termName, year } from '../../constants/timetable';
-import { AppContext } from '../../context/AppContext';
+import { term, termName, year } from '../../constants/timetable';
 
 import About from './About';
 import Changelog from './Changelog';
@@ -21,7 +20,7 @@ const LogoImg = styled('img')`
   height: 46px;
   margin-right: 12.5px;
   margin-top: -2px;
-  margin-left: ${isPreview ? 9.5 : -11.5}px;
+  margin-left: -11.5px;
 `;
 
 const NavbarBox = styled('div')`
@@ -53,23 +52,12 @@ const Navbar: React.FC = () => {
   const theme = useTheme<ThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { isFriendsListOpen, setIsFriendsListOpen } = useContext(AppContext);
-
-  const handleDrawerOpen = () => {
-    setIsFriendsListOpen(!isFriendsListOpen);
-  };
-
   const [currLogo, setCurrLogo] = useState(notanglesLogo);
 
   return (
     <NavbarBox>
       <StyledNavBar enableColorOnDark position="fixed">
         <Toolbar>
-          {isPreview && (
-            <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start">
-              <Menu />
-            </IconButton>
-          )}
           <LogoImg
             src={currLogo}
             onMouseOver={() => setCurrLogo(notanglesLogoGif)}
@@ -93,12 +81,7 @@ const Navbar: React.FC = () => {
             content={<Privacy />}
           />
           <CustomModal title="Settings" showIcon={<SettingsIcon />} description={'Settings'} content={<Settings />} />
-          <CustomModal
-            title="Login"
-            showIcon={<LoginIcon />}
-            description={'Login'}
-            content={<Login />}
-          />
+          <CustomModal title="Login" showIcon={<LoginIcon />} description={'Login'} content={<Login />} />
         </Toolbar>
       </StyledNavBar>
     </NavbarBox>
