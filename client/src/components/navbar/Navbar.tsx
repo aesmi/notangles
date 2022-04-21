@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Description, Info, Login as LoginIcon, Security, Settings as SettingsIcon } from '@mui/icons-material';
-import { AppBar, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 
 import notanglesLogo from '../../assets/notangles_1.png';
 import notanglesLogoGif from '../../assets/notangles.gif';
+import { ShowModalButton } from './CustomModal';
 import { ThemeType } from '../../constants/theme';
 import { term, termName, year } from '../../constants/timetable';
 
 import About from './About';
 import Changelog from './Changelog';
 import CustomModal from './CustomModal';
-import Login from './Login';
 import Privacy from './Privacy';
 import Settings from './Settings';
 
@@ -81,7 +82,13 @@ const Navbar: React.FC = () => {
             content={<Privacy />}
           />
           <CustomModal title="Settings" showIcon={<SettingsIcon />} description={'Settings'} content={<Settings />} />
-          <CustomModal title="Login" showIcon={<LoginIcon />} description={'Login'} content={<Login />} />
+          <Tooltip title="Login">
+            <Link to="/login">
+              <ShowModalButton>
+                <LoginIcon />
+              </ShowModalButton>
+            </Link>
+          </Tooltip>
         </Toolbar>
       </StyledNavBar>
     </NavbarBox>

@@ -22,7 +22,7 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 10px;
 `;
 
-const ShowModalButton = styled(IconButton)`
+export const ShowModalButton = styled(IconButton)`
   margin-right: 5px;
 `;
 
