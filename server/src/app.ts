@@ -1,4 +1,3 @@
-import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 
@@ -10,9 +9,9 @@ const app = express();
 app.set('port', process.env.PORT || 3001);
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 // parse application/json
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 app.get('/', index);
